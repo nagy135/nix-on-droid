@@ -77,6 +77,7 @@ in {
 
     languages = {
       enableFormat = true;
+      enableLSP = true;
       enableTreesitter = true;
       enableExtraDiagnostics = true;
 
