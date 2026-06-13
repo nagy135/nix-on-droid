@@ -20,6 +20,7 @@ in
     fzf
     gawk
     lazygit
+    nodejs
 
     procps
     killall
