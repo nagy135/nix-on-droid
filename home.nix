@@ -10,17 +10,12 @@ let
   fontDst = "${config.home.homeDirectory}/.termux/font.ttf";
 in
 {
+  imports = [
+    ./atuin.nix
+    ./zsh.nix
+  ];
+
   home.stateVersion = "24.05";
-
-  programs.zsh = {
-    enable = true;
-    initExtra = ''
-      export PATH=$PATH:$HOME/.scripts
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-
-      [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-    '';
-  };
 
   home.activation.copyFont = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -e "${fontDst}" ] || ! cmp -s "${fontSrc}" "${fontDst}"; then
