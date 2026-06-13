@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
     nvf = {
-      url = "github:notashelf/nvf";
+      url = "github:notashelf/nvf/v0.6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

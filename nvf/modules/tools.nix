@@ -252,12 +252,5 @@
       desc = "Treesitter Search";
       action = "<cmd>lua require('flash').treesitter_search()<CR>";
     }
-    {
-      key = "<C-s>";
-      mode = "c";
-      silent = true;
-      desc = "Toggle Flash Search";
-      action = "<cmd>lua require('flash').toggle()<CR>";
-    }
   ];
 }

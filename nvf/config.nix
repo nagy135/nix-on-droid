@@ -33,38 +33,6 @@ in {
     withPython3 = true;
     enableLuaLoader = true;
 
-    clipboard.enable = true;
-
-    opts = {
-      number = true;
-      relativenumber = true;
-      clipboard = lib.mkForce "unnamedplus";
-      winborder = "rounded";
-      mouse = "a";
-      showmode = false;
-      termguicolors = true;
-      wrap = true;
-      cursorline = true;
-      scrolloff = 10;
-      signcolumn = "yes";
-      splitright = true;
-      splitbelow = true;
-      list = true;
-      inccommand = "split";
-      confirm = true;
-      foldmethod = "marker";
-      tabstop = 2;
-      softtabstop = 2;
-      shiftwidth = 2;
-      expandtab = true;
-      breakindent = true;
-      undofile = true;
-      ignorecase = true;
-      smartcase = true;
-      updatetime = 250;
-      timeoutlen = 300;
-    };
-
     extraPackages = with pkgs; [
       alejandra
       black
@@ -80,40 +48,14 @@ in {
       trouble.enable = false;
     };
 
-    lsp.servers.lua_ls.settings.Lua.completion.callSnippet = "Replace";
-
-    autocomplete.blink-cmp = {
+    autopairs = {
       enable = true;
-      mappings = {
-        next = "<C-n>";
-        previous = "<C-p>";
-        scrollDocsUp = "<C-b>";
-        scrollDocsDown = "<C-f>";
-        confirm = "<C-y>";
-        complete = "<C-Space>";
-      };
-      setupOpts.keymap = {
-        preset = "none";
-        "<C-l>" = ["snippet_forward" "fallback"];
-        "<C-h>" = ["snippet_backward" "fallback"];
-      };
+      type = "nvim-autopairs";
     };
-    autopairs.nvim-autopairs = {
-      enable = true;
-      setupOpts = {
-        disable_filetype = [
-          "TelescopePrompt"
-          "spectre_panel"
-          "snacks_picker_input"
-          "typebreak"
-        ];
-      };
-    };
-    snippets.luasnip.enable = true;
+    snippets.vsnip.enable = true;
 
     binds.whichKey = {
       enable = true;
-      setupOpts.notify = false;
     };
 
     git = {
@@ -124,15 +66,13 @@ in {
 
     telescope.enable = true;
 
-    filetree.neo-tree.enable = false;
     tabline.nvimBufferline.enable = true;
 
     notify.nvim-notify.enable = true;
 
     visuals = {
-      nvim-web-devicons.enable = true;
+      nvimWebDevicons.enable = true;
       fidget-nvim.enable = true;
-      indent-blankline.enable = false;
     };
 
     languages = {
@@ -140,19 +80,16 @@ in {
       enableTreesitter = true;
       enableExtraDiagnostics = true;
 
-      typescript = {
-        enable = true;
-        format.enable = true;
-      };
-
       bash.enable = true;
       html.enable = true;
-      json.enable = true;
       lua.enable = true;
       markdown.enable = false;
       nix.enable = true;
       python.enable = true;
-      yaml.enable = true;
+      ts = {
+        enable = true;
+        format.enable = true;
+      };
     };
 
     startPlugins = with pkgs.vimPlugins; [
@@ -167,195 +104,37 @@ in {
       polarPlugin
     ];
 
-    lazy.enable = true;
-    lazy.plugins = {
-      "flash.nvim" = {
-        package = pkgs.vimPlugins.flash-nvim;
-        lazy = false;
-        setupModule = "flash";
-        setupOpts = {};
-      };
-
-      "telescope-file-browser.nvim" = {
-        package = pkgs.vimPlugins.telescope-file-browser-nvim;
-      };
-
-      "snacks.nvim" = {
-        package = pkgs.vimPlugins.snacks-nvim;
-        lazy = false;
-        setupModule = "snacks";
-        setupOpts = {
-          picker.sources.lazy = false;
-        };
-      };
-
-      "nvim-colorizer.lua" = {
-        package = pkgs.vimPlugins.nvim-colorizer-lua;
-        event = ["BufReadPre" "BufNewFile"];
-        setupModule = "colorizer";
-        setupOpts = {
-          filetypes = ["*"];
-          buftypes = ["terminal"];
-          user_commands = true;
-          options = {
-            parsers = {
-              hex.default = true;
-              css = true;
-            };
-            display.mode = "background";
-          };
-        };
-      };
-
-      "noice.nvim" = {
-        package = pkgs.vimPlugins.noice-nvim;
-        lazy = false;
-        setupModule = "noice";
-        setupOpts = {
-          lsp = {
-            progress.enabled = true;
-            hover.enabled = true;
-            signature.enabled = true;
-          };
-
-          presets = {
-            bottom_search = false;
-            command_palette = true;
-            long_message_to_split = true;
-            inc_rename = false;
-            lsp_doc_border = true;
-          };
-
-          cmdline = {
-            enabled = true;
-            view = "cmdline_popup";
-          };
-
-          messages = {
-            enabled = true;
-            view = "notify";
-            view_error = "notify";
-            view_warn = "notify";
-          };
-
-          popupmenu.enabled = true;
-
-          notify.enabled = true;
-        };
-      };
-
-      "nvim-navic" = {
-        package = pkgs.vimPlugins.nvim-navic;
-        lazy = false;
-        setupModule = "nvim-navic";
-        setupOpts = {};
-      };
-
-      "nvim-surround" = {
-        package = pkgs.vimPlugins.nvim-surround;
-        lazy = false;
-        setupModule = "nvim-surround";
-        setupOpts = {};
-      };
-
-      "quicker.nvim" = {
-        package = pkgs.vimPlugins.quicker-nvim;
-        ft = ["qf"];
-        setupModule = "quicker";
-        setupOpts = {};
-      };
-
-      "vim-qf" = {
-        package = pkgs.vimPlugins.vim-qf;
-        ft = ["qf"];
-      };
-
-      "nvim-bqf" = {
-        package = pkgs.vimPlugins.nvim-bqf;
-        ft = ["qf"];
-        setupModule = "bqf";
-        setupOpts = {
-          func_map = {
-            prevhist = "<C-p>";
-            nexthist = "<C-n>";
-          };
-        };
-      };
-
-      "trouble.nvim" = {
-        package = pkgs.vimPlugins.trouble-nvim;
-        cmd = ["Trouble"];
-        setupModule = "trouble";
-        setupOpts = {};
-      };
-
-      "diffview.nvim" = {
-        package = pkgs.vimPlugins.diffview-nvim;
-        cmd = ["DiffviewOpen" "DiffviewFileHistory"];
-        setupModule = "diffview";
-        setupOpts.view = {
-          default.disable_diagnostics = true;
-          file_history.disable_diagnostics = true;
-        };
-      };
-
-      # "neogit" = {
-      #   package = pkgs.vimPlugins.neogit;
-      #   cmd = ["Neogit"];
-      # };
-
-      "undotree" = {
-        package = pkgs.vimPlugins.undotree;
-        cmd = ["UndotreeToggle" "UndotreeFocus"];
-      };
-
-      "nvim-window-picker" = {
-        package = pkgs.vimPlugins.nvim-window-picker;
-        lazy = false;
-        setupModule = "window-picker";
-        setupOpts.hint = "floating-big-letter";
-      };
-
-      "snipe.nvim" = {
-        package = pkgs.vimPlugins.snipe-nvim;
-        keys = [
-          {
-            key = "<leader>S";
-            mode = ["n"];
-          }
-        ];
-        setupModule = "snipe";
-        setupOpts = {
-          ui = {
-            preselect_current = true;
-            position = "center";
-            open_win_override.border = "rounded";
-            text_align = "file-first";
-          };
-        };
-      };
-
-      "supermaven-nvim" = {
-        package = pkgs.vimPlugins.supermaven-nvim;
-        lazy = false;
-        setupModule = "supermaven-nvim";
-        setupOpts = {
-          color = {
-            suggestion_color = "#DBDBDB";
-            cterm = 244;
-          };
-        };
-      };
-
-      "typebreak.nvim" = {
-        package = typebreakPlugin;
-      };
-    };
-
     luaConfigPre = ''
       vim.g.mapleader = " "
       vim.g.maplocalleader = " "
       vim.g.have_nerd_font = true
+
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      vim.opt.clipboard = "unnamedplus"
+      vim.opt.mouse = "a"
+      vim.opt.showmode = false
+      vim.opt.termguicolors = true
+      vim.opt.wrap = true
+      vim.opt.cursorline = true
+      vim.opt.scrolloff = 10
+      vim.opt.signcolumn = "yes"
+      vim.opt.splitright = true
+      vim.opt.splitbelow = true
+      vim.opt.list = true
+      vim.opt.inccommand = "split"
+      vim.opt.confirm = true
+      vim.opt.foldmethod = "marker"
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
+      vim.opt.shiftwidth = 2
+      vim.opt.expandtab = true
+      vim.opt.breakindent = true
+      vim.opt.undofile = true
+      vim.opt.ignorecase = true
+      vim.opt.smartcase = true
+      vim.opt.updatetime = 250
+      vim.opt.timeoutlen = 300
     '';
 
     luaConfigRC = {

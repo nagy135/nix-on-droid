@@ -1,7 +1,5 @@
-{pkgs, ...}: {
+{...}: {
   config.vim = {
-    extraPackages = [pkgs.vscode-js-debug];
-
     debugger.nvim-dap = {
       enable = true;
       ui = {
@@ -24,12 +22,6 @@
         goDown = "<leader>dj";
         goUp = "<leader>dk";
       };
-    };
-
-    lazy.plugins."nvim-dap-vscode-js" = {
-      package = pkgs.vimPlugins.nvim-dap-vscode-js;
-      lazy = false;
-      after = builtins.readFile ../lua/debug-js.lua;
     };
   };
 }
