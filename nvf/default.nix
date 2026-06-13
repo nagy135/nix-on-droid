@@ -18,7 +18,6 @@ in
       ./modules/git.nix
       ./modules/gitsigns.nix
       ./modules/tools.nix
-      ./modules/claudecode.nix
       ./modules/debugger.nix
       ./modules/typescript.nix
       ./modules/notes.nix
