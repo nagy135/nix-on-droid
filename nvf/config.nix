@@ -160,7 +160,6 @@ in {
       gruvbox-material
       kanagawa-nvim
       nord-nvim
-      vague-nvim
       vim-sleuth
       mini-nvim
       mini-pick
