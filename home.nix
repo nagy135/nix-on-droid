@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./atuin.nix
+    ./eza.nix
     ./zsh.nix
   ];
 
