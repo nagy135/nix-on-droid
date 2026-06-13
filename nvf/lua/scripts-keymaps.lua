@@ -1,9 +1,11 @@
 local function get_dotfiles_root()
-  local config_path = vim.uv.fs_realpath(vim.fn.stdpath("config")) or vim.fn.stdpath("config")
+  local uv = vim.uv or vim.loop
+  local config_path = uv.fs_realpath(vim.fn.stdpath("config")) or vim.fn.stdpath("config")
   return vim.fs.dirname(vim.fs.dirname(vim.fs.dirname(config_path)))
 end
 
 local function get_wiki_root()
+  local uv = vim.uv or vim.loop
   local dotfiles_root = get_dotfiles_root()
   local candidates = {
     vim.fn.expand("~/wiki"),
@@ -14,7 +16,7 @@ local function get_wiki_root()
 
   for _, wiki_root in ipairs(candidates) do
     if vim.fn.isdirectory(wiki_root) == 1 then
-      if vim.uv.fs_stat(wiki_root .. "/index.norg") or vim.uv.fs_stat(wiki_root .. "/index.wiki") then
+      if uv.fs_stat(wiki_root .. "/index.norg") or uv.fs_stat(wiki_root .. "/index.wiki") then
         return wiki_root
       end
     end
@@ -30,6 +32,7 @@ local function get_wiki_root()
 end
 
 local function open_wiki_index()
+  local uv = vim.uv or vim.loop
   local wiki_root = get_wiki_root()
   local candidates = {
     wiki_root .. "/index.norg",
@@ -38,7 +41,7 @@ local function open_wiki_index()
   }
 
   for _, path in ipairs(candidates) do
-    if vim.uv.fs_stat(path) then
+    if uv.fs_stat(path) then
       vim.cmd.edit(vim.fn.fnameescape(path))
       return
     end
@@ -120,7 +123,11 @@ function _G.NvfDiffviewToggle()
 end
 
 function _G.NvfToggleSupermaven()
-  local api = require("supermaven-nvim.api")
+  local ok, api = pcall(require, "supermaven-nvim.api")
+  if not ok then
+    vim.notify("SuperMaven is not installed", vim.log.levels.WARN)
+    return
+  end
   api.toggle()
   vim.notify("SuperMaven " .. (api.is_running() and "on" or "off"), vim.log.levels.INFO)
 end

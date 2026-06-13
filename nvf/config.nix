@@ -142,7 +142,6 @@ in {
       miniConfig = builtins.readFile ./lua/mini.lua;
       commandAbbreviations = builtins.readFile ./lua/command-abbreviations.lua;
       telescopeConfig = builtins.readFile ./lua/telescope.lua;
-      cmpAndFormatting = builtins.readFile ./lua/cmp-formatting.lua;
       diagnosticsAndLsp = builtins.readFile ./lua/diagnostics-lsp.lua;
       quickfixAndAutocmds = builtins.readFile ./lua/quickfix-autocmds.lua;
       scriptsAndKeymaps = builtins.readFile ./lua/scripts-keymaps.lua;

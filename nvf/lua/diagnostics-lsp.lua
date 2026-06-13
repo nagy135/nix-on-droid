@@ -123,16 +123,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set(mode or "n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
     end
 
-    map("gd", function() Snacks.picker.lsp_definitions() end, "[G]oto [D]efinition")
-    map("gr", function() Snacks.picker.lsp_references() end, "[G]oto [R]eferences")
-    map("gI", function() Snacks.picker.lsp_implementations() end, "[G]oto [I]mplementation")
+    map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+    map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+    map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
     map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
     map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
     map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
     map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
     map("<leader>cr", vim.lsp.buf.rename, "[C]ode [R]ename")
     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-    map("gD", function() Snacks.picker.lsp_declarations() end, "[G]oto [D]eclaration")
+    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client.server_capabilities.documentHighlightProvider then
@@ -157,15 +157,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end, "[T]oggle Inlay [H]ints")
     end
 
-    local navic = require("nvim-navic")
-    if client and client.server_capabilities.documentSymbolProvider then
+    local navic_ok, navic = pcall(require, "nvim-navic")
+    if navic_ok and client and client.server_capabilities.documentSymbolProvider then
       navic.attach(client, event.buf)
     end
   end,
 })
 
 vim.api.nvim_create_user_command("NavicNotify", function()
-  local navic = require("nvim-navic")
+  local navic_ok, navic = pcall(require, "nvim-navic")
+  if not navic_ok then
+    vim.notify("Navic is not installed", vim.log.levels.WARN, { title = "Navic Location" })
+    return
+  end
   if navic.is_available() then
     local location = navic.get_location()
     if location ~= "" then

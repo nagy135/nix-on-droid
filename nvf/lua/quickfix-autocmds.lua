@@ -10,7 +10,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
   group = lint_augroup,
   callback = function(args)
     if vim.opt_local.modifiable:get() and not is_env_file(args.buf) then
-      require("lint").try_lint()
+      local ok, lint = pcall(require, "lint")
+      if ok then
+        lint.try_lint()
+      end
     end
   end,
 })
@@ -38,11 +41,17 @@ local function set_qf_maps(buf)
   vim.keymap.set("n", "q", "<cmd>cclose<cr>", { buffer = buf, silent = true })
 
   vim.keymap.set("n", ">", function()
-    require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+    local ok, quicker = pcall(require, "quicker")
+    if ok then
+      quicker.expand({ before = 2, after = 2, add_to_existing = true })
+    end
   end, { buffer = buf, desc = "Expand quickfix context" })
 
   vim.keymap.set("n", "<", function()
-    require("quicker").collapse()
+    local ok, quicker = pcall(require, "quicker")
+    if ok then
+      quicker.collapse()
+    end
   end, { buffer = buf, desc = "Collapse quickfix context" })
 end
 
