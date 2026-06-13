@@ -347,63 +347,6 @@ in {
         };
       };
 
-      "kulala.nvim" = {
-        package = pkgs.vimPlugins.kulala-nvim;
-        ft = ["http" "rest"];
-        after = ''
-          require("kulala").setup({
-            global_keymaps = {
-              ["Send request"] = {
-                "<leader>Rs",
-                function()
-                  require("kulala").run()
-                end,
-                mode = { "n", "v" },
-                desc = "Send request",
-              },
-              ["Send all requests"] = {
-                "<leader>Ra",
-                function()
-                  require("kulala").run_all()
-                end,
-                mode = { "n", "v" },
-                ft = "http",
-              },
-              ["Replay the last request"] = {
-                "<leader>Rr",
-                function()
-                  require("kulala").replay()
-                end,
-                ft = { "http", "rest" },
-              },
-            },
-            lsp = {
-              enable = true,
-              filetypes = { "http", "rest", "json", "yaml", "bruno" },
-              keymaps = false,
-              formatter = {
-                split_params = 4,
-                sort = {
-                  metadata = true,
-                  variables = true,
-                  commands = false,
-                  json = true,
-                },
-                quote_json_variables = true,
-                indent = 2,
-              },
-            },
-            ui = {
-              win_opts = {
-                wo = {
-                  foldenable = false,
-                },
-              },
-            },
-          })
-        '';
-      };
-
       "supermaven-nvim" = {
         package = pkgs.vimPlugins.supermaven-nvim;
         lazy = false;
