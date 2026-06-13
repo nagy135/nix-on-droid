@@ -176,18 +176,6 @@ in {
         setupOpts = {};
       };
 
-      "lazydev.nvim" = {
-        package = pkgs.vimPlugins.lazydev-nvim;
-        ft = ["lua"];
-        after = ''
-          require("lazydev").setup({
-            library = {
-              { path = "''${3rd}/luv/library", words = { "vim%.uv" } },
-            },
-          })
-        '';
-      };
-
       "telescope-file-browser.nvim" = {
         package = pkgs.vimPlugins.telescope-file-browser-nvim;
       };
