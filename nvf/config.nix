@@ -270,16 +270,6 @@ in {
         setupOpts = {};
       };
 
-      "align.nvim" = {
-        package = pkgs.vimPlugins.align-nvim;
-        keys = [
-          {
-            key = "aw";
-            mode = ["x"];
-          }
-        ];
-      };
-
       "quicker.nvim" = {
         package = pkgs.vimPlugins.quicker-nvim;
         ft = ["qf"];
