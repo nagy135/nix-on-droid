@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   environment.packages = with pkgs; [
     neovim
     zsh
@@ -32,6 +31,8 @@
     zip
     unzip
   ];
+
+  user.shell = "${pkgs.zsh}/bin/zsh";
 
   environment.etcBackupExtension = ".bak";
   system.stateVersion = "24.05";
