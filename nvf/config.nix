@@ -162,7 +162,6 @@ in {
       nord-nvim
       vim-sleuth
       mini-nvim
-      mini-pick
       telescope-fzf-native-nvim
       telescope-ui-select-nvim
       polarPlugin
