@@ -4,17 +4,30 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nix-on-droid }: {
+  outputs = {
+    self,
+    nixpkgs,
+    nix-on-droid,
+    nvf,
+  }: {
 
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs { system = "aarch64-linux"; };
-      modules = [ ./nix-on-droid.nix ];
+      modules = [
+        { _module.args.nvf = nvf; }
+        ./nix-on-droid.nix
+      ];
     };
 
   };

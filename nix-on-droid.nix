@@ -1,6 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nvf,
+  ...
+}:
+let
+  neovimPackage = (import ./nvf { inherit pkgs nvf; }).neovim;
+in
+{
   environment.packages = with pkgs; [
-    neovim
+    neovimPackage
     zsh
     git
     stow
